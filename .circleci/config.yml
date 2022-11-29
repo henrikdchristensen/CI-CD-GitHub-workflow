@@ -11,10 +11,10 @@ jobs: # specification of jobs that can be executed
       - checkout # fetch code from git repo
       - run:
           name: Restore project dependencies and tools
-          command: dotnet restore
+          command: dotnet restore Application
       - run:
           name: Build project 
-          command: dotnet build
+          command: dotnet build Application
   test: # name of job
     executor:
       name: win/default
@@ -23,9 +23,9 @@ jobs: # specification of jobs that can be executed
           name: "Running tests"
           command: |
             mkdir test-results
-            dotnet test --logger:"trx;LogFilePrefix=test-results/testResults.html"
+            dotnet test ./Tests --logger:"trx;LogFilePrefix=test-results/testResults.html"
       - store_test_results:
-          path: ./Cfd.Tests/test-results
+          path: ./Tests/test-results
 workflows:
   workflow-1:
     jobs:
