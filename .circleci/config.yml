@@ -16,11 +16,6 @@ jobs: # specification of jobs that can be executed
       - run:
           name: Build project 
           command: dotnet build
-  test: # name of job
-    executor:
-      name: win/default
-    working_directory: ~/Tests
-    steps:
       - run:
           name: "Running tests"
           command: dotnet test
@@ -30,7 +25,7 @@ workflows:
   workflow-1:
     jobs:
       - build
-      - test:
-          requires:
-            - build
+      #- test:
+      #    requires:
+      #      - build
             # --logger:"trx;LogFilePrefix=test-results/testResults.html"
