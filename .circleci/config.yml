@@ -1,0 +1,27 @@
+version: 2.1
+
+orbs: # orbs are shareable packages of CircleCI configuration that can simplify builds.
+  win: circleci/windows@5.0
+
+jobs: # specification of jobs that can be executed
+  build-and-test: # name of job
+    executor:
+      name: win/default
+    steps:
+      - checkout # fetch code from git repo
+      - run:
+          name: Restore project dependencies and tools
+          command: dotnet restore
+      - run:
+          name: Build project 
+          command: dotnet build
+      - run:
+          name: "Running tests"
+          command: |
+            mkdir test-results
+            dotnet test --logger:"trx;LogFilePrefix=test-results/testResults.html"
+
+workflows:
+  workflow-1:
+    jobs:
+      - build-and-test
