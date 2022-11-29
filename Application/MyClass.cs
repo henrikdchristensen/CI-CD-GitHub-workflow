@@ -6,5 +6,6 @@
         public bool MyFunc(bool b) {
             return b;
         }
+//blabla
     }
 }
