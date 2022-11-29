@@ -21,7 +21,9 @@ jobs: # specification of jobs that can be executed
     steps:
       - run:
           name: "Running tests"
-          command: dotnet test Tests
+          command: |
+            mkdir test-results
+            dotnet test ./Tests
       - store_test_results:
           path: Tests/test-results
 workflows:
