@@ -8,22 +8,24 @@ jobs: # specification of jobs that can be executed
     executor:
       name: win/default
     working_directory: /tmp
+    
     steps:
-      - checkout # fetch code from git repo
+      - checkout: # fetch code from git repo
+          path: "src"
       - run:
           name: Restore project dependencies and tools
-          command: dotnet restore
+          command: dotnet restore src/Application
       - run:
           name: Build project 
-          command: dotnet build
+          command: dotnet build src/Application
   test: # name of job
     executor:
       name: win/default
-    working_directory: /tmp
+    working_directory: /src
     steps:
       - run:
           name: "Running tests"
-          command: dotnet test
+          command: dotnet test /src/Tests
       - store_test_results:
           path: test-results
 workflows:
