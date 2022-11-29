@@ -10,19 +10,30 @@ jobs: # specification of jobs that can be executed
     working_directory: /tmp
     
     steps:
+      - run: mkdir -p workspace
       - checkout: # fetch code from git repo
-          path: "src"
+          path: "workspace"
       - run:
           name: Restore project dependencies and tools
-          command: dotnet restore src/Application
+          command: dotnet restore workspace/Application
       - run:
           name: Build project 
-          command: dotnet build src/Application
+          command: dotnet build workspace/Application
+      - persist_to_workspace:
+        # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
+        # taken to be the root directory of the workspace.
+          root: workspace
+          # Must be relative path from root
+          paths:
+            - echo-output
   test: # name of job
     executor:
       name: win/default
-    working_directory: /src
+    working_directory: /tmp
     steps:
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: /tmp/workspace
       - run:
           name: "Make folder"
           command: mkdir test-results
