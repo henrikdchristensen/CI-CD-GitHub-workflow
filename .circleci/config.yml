@@ -16,13 +16,6 @@ jobs: # specification of jobs that can be executed
       - run:
           name: Build project 
           command: dotnet build
-      - persist_to_workspace:
-          # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
-          # taken to be the root directory of the workspace.
-          root: workspace
-          # Must be relative path from root
-          paths:
-            - echo-output
   test: # name of job
     executor:
       name: win/default
