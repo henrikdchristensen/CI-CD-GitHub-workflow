@@ -24,8 +24,11 @@ jobs: # specification of jobs that can be executed
     working_directory: /src
     steps:
       - run:
+          name: "Make folder"
+          command: mkdir test-results
+      - run:
           name: "Running tests"
-          command: dotnet test /src/Tests
+          command: dotnet test --logger "html;logfilename=test-results/testResults.html"
       - store_test_results:
           path: test-results
 workflows:
@@ -35,4 +38,3 @@ workflows:
       - test:
           requires:
             - build
-           # --logger:"trx;LogFilePrefix=test-results/testResults.html"
