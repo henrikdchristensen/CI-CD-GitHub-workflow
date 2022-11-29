@@ -3,15 +3,11 @@ version: 2.1
 orbs: # orbs are shareable packages of CircleCI configuration that can simplify builds.
   win: circleci/windows@5.0
 
-executers:
-  my-executer:
-    
-
 jobs: # specification of jobs that can be executed
   build: # name of job
     executor:
       name: win/default
-    working_directory: ~/tmp
+    working_directory: /tmp
     steps:
       - checkout # fetch code from git repo
       - run:
@@ -20,9 +16,6 @@ jobs: # specification of jobs that can be executed
       - run:
           name: Build project 
           command: dotnet build
-      - run:
-          name: "Running tests"
-          command: dotnet test
       - persist_to_workspace:
           # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
           # taken to be the root directory of the workspace.
@@ -33,13 +26,11 @@ jobs: # specification of jobs that can be executed
   test: # name of job
     executor:
       name: win/default
-    working_directory: ~/tmp
+    working_directory: /tmp
     steps:
       - run:
-          name: "Test"
-          command: |
-            mkdir test-results
-            dotnet test
+          name: "Running tests"
+          command: dotnet test
       - store_test_results:
           path: test-results
 workflows:
@@ -49,4 +40,4 @@ workflows:
       - test:
           requires:
             - build
-            # --logger:"trx;LogFilePrefix=test-results/testResults.html"
+           # --logger:"trx;LogFilePrefix=test-results/testResults.html"
