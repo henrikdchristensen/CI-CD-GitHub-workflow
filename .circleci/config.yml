@@ -33,7 +33,7 @@ jobs: # specification of jobs that can be executed
           at: ./
       - run:
           name: Running Tests
-          command: dotnet test src/Tests --no-build --logger "trx"
+          command: dotnet test src/Tests --logger "trx"
       - run:
           name: Convert Test Results
           when: always # run no matter what status it returns
