@@ -42,7 +42,7 @@ jobs: # specification of jobs that can be executed
 
       - run:
           name: Convert TRX test results to JUnit format
-          command: trx2junit TestResults/*.trx
+          command: trx2junit.exe TestResults/*.trx
           when: always
 
       - store_test_results:
