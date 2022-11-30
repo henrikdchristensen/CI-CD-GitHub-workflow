@@ -39,9 +39,8 @@ jobs: # specification of jobs that can be executed
           when: always # run no matter what status it returns
           command: |
             dotnet tool install -g trx2junit
-            $env:Path += '/.dotnet/tools'  
+            echo 'export PATH="$PATH:/root/.dotnet/tools"' >> "$BASH_ENV"
             trx2junit src/Tests/TestResults/*.trx
-            dir
       - store_test_results:
          path: src/Tests/TestResults
 workflows:
