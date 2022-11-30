@@ -35,13 +35,16 @@ jobs: # specification of jobs that can be executed
           name: Running Tests
           command: dotnet test src/Tests --no-build --logger "trx"
       - run:
-          name: Convert Test Results
+          name: Install Test Results
           shell: bash.exe
-          when: always # run no matter what status it returns
+         # when: always # run no matter what status it returns
           command: |
               dotnet tool install -g trx2junit
               echo 'export PATH="$PATH:/root/.dotnet/tools"' >> "$BASH_ENV"
-              trx2junit src/tests/**/TestResults/*.trx
+      - run:
+          name: Convert Test Results
+          shell: bash.exe
+          command: trx2junit src/tests/**/TestResults/*.trx
       - store_test_results:
           path: src/tests/TestResults
 workflows:
