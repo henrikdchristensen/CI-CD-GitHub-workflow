@@ -37,7 +37,7 @@ jobs: # specification of jobs that can be executed
       - run:
           name: "Running tests"
           command: dotnet test --no-build builds/Tests --logger "html;logfilename=test-results/testResults.html"
-      - store_test_results:
+      - store_artifacts:
           path: test-results
 workflows:
   workflow-1:
