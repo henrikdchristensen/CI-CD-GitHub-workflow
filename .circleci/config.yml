@@ -42,7 +42,7 @@ jobs: # specification of jobs that can be executed
             set PATH=%PATH%;/root/.dotnet/tools"
             trx2junit builds/Tests/TestResults/*.trx
       - store_test_results:
-          path: builds/Tests/TestResults
+         path: builds/Tests/TestResults
 workflows:
   workflow-1:
     jobs:
