@@ -4,49 +4,27 @@ orbs: # orbs are shareable packages of CircleCI configuration that can simplify 
   win: circleci/windows@5.0
 
 jobs: # specification of jobs that can be executed
-  build: # name of job
+  build-test: # name of job
     executor:
       name: win/default
-    working_directory: /tmp
-    
     steps:
-      - run: mkdir -p builds
-      - checkout: # fetch code from git repo
-          path: "builds"
+      - checkout
+      - run: dotnet build
+      - run: dotnet test --no-build --logger "trx"
       - run:
-          name: Restore project dependencies and tools
-          command: dotnet restore builds/Application
-      - run:
-          name: Build project 
-          command: dotnet build builds/Application
-      - persist_to_workspace:
-          root: .
-          paths:
-            - builds/*
-  test: # name of job
-    executor:
-      name: win/default
-    working_directory: /tmp/
-    steps:
-      - attach_workspace:
-          # Must be absolute path or relative path from working_directory
-          at: ./
-      - run:
-          name: Running Tests
-          command: dotnet test builds/Tests --no-build --logger "trx"
-      - run:
-          name: Convert Test Results
+          name: test results
           when: always
           command: |
               dotnet tool install -g trx2junit
               export PATH="$PATH:/root/.dotnet/tools"
-              trx2junit builds/Tests/tests/**/TestResults/*.trx
+              trx2junit tests/**/TestResults/*.trx
       - store_test_results:
-          path: builds/Tests/tests/TestResults
+          path: tests/TestResults
+ 
 workflows:
   workflow-1:
     jobs:
-      - build
-      - test:
-          requires:
-            - build
+      - build-test
+#      - test:
+#          requires:
+#            - build
