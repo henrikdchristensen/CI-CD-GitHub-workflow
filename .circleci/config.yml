@@ -13,11 +13,11 @@ jobs: # specification of jobs that can be executed
       - checkout: # fetch code from git repo
           path: "src"
       - run:
-          name: Restore project dependencies and tools
-          command: dotnet restore src/Application
+          name: Restore Project dependencies and tools
+          command: dotnet restore src\
       - run:
-          name: Build project 
-          command: dotnet build src/Application
+          name: Build Project 
+          command: dotnet build src\
       - persist_to_workspace:
           root: .
           paths:
@@ -30,10 +30,10 @@ jobs: # specification of jobs that can be executed
           # Must be absolute path or relative path from working_directory
           at: ./
       - run:
-          name: Run tests
-          command: dotnet test src/Tests --logger trx --results-directory "src\TestResults"
+          name: Run Tests
+          command: dotnet test src\Tests --logger trx --results-directory "src\TestResults"
       - run:
-          name: Install TRX 2 JUnit converter
+          name: Convert Test Results, so CircleCI understands
           command: |
             dotnet tool install -g trx2junit
             $exePath = Join-Path $env:USERPROFILE '.dotnet\tools\trx2junit.exe'
@@ -41,7 +41,7 @@ jobs: # specification of jobs that can be executed
           when: always
 
       - store_test_results:
-          path: TestResults
+          path: src\TestResults
 workflows:
   workflow-1:
     jobs:
