@@ -36,6 +36,7 @@ jobs: # specification of jobs that can be executed
           command: dotnet test src/Tests --logger "trx"
       - run:
           name: Convert Test Results
+          shell: bash.exe
           when: always # run no matter what status it returns
           command: |
               dotnet tool install -g trx2junit
