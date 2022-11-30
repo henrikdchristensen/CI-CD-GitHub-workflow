@@ -14,10 +14,10 @@ jobs: # specification of jobs that can be executed
           path: "src"
       - run:
           name: Restore Project dependencies and tools
-          command: dotnet restore src\
+          command: dotnet restore src\Application
       - run:
           name: Build Project 
-          command: dotnet build src\
+          command: dotnet build src\Application
       - persist_to_workspace:
           root: .
           paths:
@@ -37,11 +37,11 @@ jobs: # specification of jobs that can be executed
           command: |
             dotnet tool install -g trx2junit
             $exePath = Join-Path $env:USERPROFILE '.dotnet\tools\trx2junit.exe'
-            & $exePath src\TestResults\*.trx
+            & $exePath src\TestResults\*.trx -output src\ConvertedTestsResults
           when: always
 
       - store_test_results:
-          path: src\TestResults
+          path: src\ConvertedTestsResults
 workflows:
   workflow-1:
     jobs:
