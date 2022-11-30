@@ -5,10 +5,10 @@ orbs: # orbs are shareable packages of CircleCI configuration that can simplify 
 
 jobs: # specification of jobs that can be executed
   build: # name of job
+    # Default shell is powershell
     executor:
       name: win/default
     working_directory: /tmp
-    
     steps:
       - run: mkdir -p src
       - checkout: # fetch code from git repo
@@ -33,8 +33,7 @@ jobs: # specification of jobs that can be executed
           at: ./
       - run:
           name: Run tests
-          command: |
-            dotnet test --logger trx --results-directory "..\TestResults"
+          command: dotnet test src/Tests --logger trx --results-directory "..\TestResults"
       - run:
           name: Install TRX 2 JUnit converter
           command: dotnet tool install -g trx2junit
