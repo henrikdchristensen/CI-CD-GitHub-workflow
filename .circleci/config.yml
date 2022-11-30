@@ -4,7 +4,7 @@ orbs: # orbs are shareable packages of CircleCI configuration that can simplify 
   win: circleci/windows@5.0
 
 jobs: # specification of jobs that can be executed
-  build: # name of job
+  build:
     # Default shell is powershell
     executor:
       name: win/default
@@ -14,15 +14,15 @@ jobs: # specification of jobs that can be executed
           path: "src"
       - run:
           name: Restore Project dependencies and tools
-          command: dotnet restore src\
+          command: dotnet restore src\Application
       - run:
           name: Build Project 
-          command: dotnet build src\
+          command: dotnet build src\Application
       - persist_to_workspace:
           root: .
           paths:
             - src/*
-  test: # name of job
+  test:
     executor:
       name: win/default
     steps:
@@ -37,13 +37,13 @@ jobs: # specification of jobs that can be executed
           command: |
             dotnet tool install -g trx2junit
             $exePath = Join-Path $env:USERPROFILE '.dotnet\tools\trx2junit.exe'
-            & $exePath src\TestResults\*.trx -output src\ConvertedTestsResults
+            & $exePath src\TestResults\*.trx --output src\ConvertedResults
           when: always
-
       - store_test_results:
-          path: src\ConvertedTestsResults
+          path: src\ConvertedResults
+
 workflows:
-  workflow-1:
+  build-test:
     jobs:
       - build
       - test:
