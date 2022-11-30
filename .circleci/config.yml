@@ -36,7 +36,7 @@ jobs: # specification of jobs that can be executed
           command: mkdir test-results
       - run:
           name: "Running tests"
-          command: dotnet test builds/Tests --logger "html;logfilename=test-results/testResults.html"
+          command: dotnet test --no-build builds/Tests --logger "html;logfilename=test-results/testResults.html"
       - store_test_results:
           path: test-results
 workflows:
