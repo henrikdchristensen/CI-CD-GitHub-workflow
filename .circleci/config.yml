@@ -31,7 +31,7 @@ jobs: # specification of jobs that can be executed
           at: ./
       - run:
           name: Run Tests
-          command: dotnet test src\Tests --no-build --logger trx --results-directory "src\TestResults"
+          command: dotnet test src\Tests --logger trx --results-directory "src\TestResults"
       - run:
           name: Convert Test Results, so CircleCI understands
           command: |
