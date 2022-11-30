@@ -31,17 +31,17 @@ jobs: # specification of jobs that can be executed
           at: ./
       - run:
           name: Run Tests
-          command: dotnet test src\Tests --logger trx --results-directory "src\TestResults"
+          command: dotnet test src\Tests --no-build --logger trx --results-directory "src\TestResults"
       - run:
           name: Convert Test Results, so CircleCI understands
           command: |
             dotnet tool install -g trx2junit
             $exePath = Join-Path $env:USERPROFILE '.dotnet\tools\trx2junit.exe'
-            & $exePath src\TestResults\*.trx --output src/results
+            & $exePath src\TestResults\*.trx
           when: always
 
       - store_test_results:
-          path: src/results
+          path: src\TestResults
 workflows:
   workflow-1:
     jobs:
