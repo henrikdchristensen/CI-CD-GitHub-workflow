@@ -14,10 +14,10 @@ jobs: # specification of jobs that can be executed
           path: "src"
       - run:
           name: Restore Project dependencies and tools
-          command: dotnet restore src\Application
+          command: dotnet restore src\
       - run:
           name: Build Project 
-          command: dotnet build src\Application
+          command: dotnet build src\
       - persist_to_workspace:
           root: .
           paths:
