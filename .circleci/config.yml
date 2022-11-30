@@ -32,13 +32,17 @@ jobs: # specification of jobs that can be executed
           # Must be absolute path or relative path from working_directory
           at: ./
       - run:
-          name: "Make folder"
-          command: mkdir test-results
+          name: Running Tests
+          command: dotnet test --no-build --logger "trx"
       - run:
-          name: "Running tests"
-          command: dotnet test --no-build builds/Tests --logger "html;logfilename=test-results/testResults.html"
-      - store_artifacts:
-          path: test-results
+          name: Convert Test Results
+          when: always
+          command: |
+              dotnet tool install -g trx2junit
+              export PATH="$PATH:/root/.dotnet/tools"
+              trx2junit tests/**/TestResults/*.trx
+      - store_test_results:
+          path: tests/TestResults
 workflows:
   workflow-1:
     jobs:
