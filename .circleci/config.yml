@@ -37,11 +37,11 @@ jobs: # specification of jobs that can be executed
           command: |
             dotnet tool install -g trx2junit
             $exePath = Join-Path $env:USERPROFILE '.dotnet\tools\trx2junit.exe'
-            & $exePath src\TestResults\*.trx
+            & $exePath src\TestResults\*.trx --output src/results
           when: always
 
       - store_test_results:
-          path: src\TestResults
+          path: src/results
 workflows:
   workflow-1:
     jobs:
