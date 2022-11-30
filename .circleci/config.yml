@@ -38,11 +38,11 @@ jobs: # specification of jobs that can be executed
       - run:
           name: Install TRX 2 JUnit converter
           command: dotnet tool install -g trx2junit
+          when: always
 
       - run:
           name: Convert TRX test results to JUnit format
-          command: |
-            /root/.dotnet/tools/trx2junit TestResults/*.trx
+          command: /root/.dotnet/tools/trx2junit TestResults/*.trx
           when: always
 
       - store_test_results:
