@@ -36,7 +36,7 @@ jobs: # specification of jobs that can be executed
           command: dotnet test builds/Tests --no-build --logger "trx"
       - run:
           name: Convert Test Results
-          when: always
+          when: always # run no matter what status it returns
           command: |
               dotnet tool install -g trx2junit
               set PATH=%PATH%;/root/.dotnet/tools"
