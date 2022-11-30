@@ -38,6 +38,8 @@ jobs: # specification of jobs that can be executed
             dotnet tool install -g trx2junit
             $env:Path
             $env:Path += ';C:\Users\.dotnet\tools\'
+            Dir -Recurse C:\Users\.dotnet\tools\ | Get-Childitem
+            $env:Path
           when: always
 
       - run:
