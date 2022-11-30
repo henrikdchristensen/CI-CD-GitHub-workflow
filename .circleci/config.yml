@@ -8,7 +8,6 @@ jobs: # specification of jobs that can be executed
     # Default shell is powershell
     executor:
       name: win/default
-    working_directory: /tmp
     steps:
       - run: mkdir -p src
       - checkout: # fetch code from git repo
@@ -26,7 +25,6 @@ jobs: # specification of jobs that can be executed
   test: # name of job
     executor:
       name: win/default
-    working_directory: /tmp/
     steps:
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
