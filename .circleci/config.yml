@@ -40,9 +40,9 @@ jobs: # specification of jobs that can be executed
           command: |
               dotnet tool install -g trx2junit
               export PATH="$PATH:/root/.dotnet/tools"
-              trx2junit tests/**/TestResults/*.trx
+              trx2junit builds/Tests/tests/**/TestResults/*.trx
       - store_test_results:
-          path: tests/TestResults
+          path: builds/Tests/tests/TestResults
 workflows:
   workflow-1:
     jobs:
