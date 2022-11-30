@@ -34,14 +34,12 @@ jobs: # specification of jobs that can be executed
           command: dotnet test src/Tests --logger trx --results-directory "..\TestResults"
       - run:
           name: Install TRX 2 JUnit converter
-          command: |
-            dotnet tool install -g trx2junit
-            $env:Path += ';$env:USERPROFILE\.dotnet\tools\trx2junit'
+          command: dotnet tool install -g trx2junit
           when: always
 
       - run:
           name: Convert TRX test results to JUnit format
-          command: trx2junit TestResults/*.trx
+          command: $env:USERPROFILE\.dotnet\tools\trx2junit.exe TestResults/*.trx
           when: always
 
       - store_test_results:
